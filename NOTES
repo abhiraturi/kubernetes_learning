@@ -1,0 +1,106 @@
+Day 1:
+ 1018 kubectl get nodes
+ 1019  pwd
+ 1020  vim config.yaml
+ 1021  ll
+ 1022  ls -lrt
+ 1023  clear
+ 1024  kind create cluster --name cka-cluster2 --config config.yaml
+ 1025  kubectl get nodes
+ 1027   kubectl config get-contexts
+ 1028   kubectl config set-contexts kind-cka-cluster1 
+ 1029   kubectl config use-context kind-cka-cluster1 
+ 1030  kubectl get nodes
+ 1031   kubectl config use-context kind-cka-cluster2
+ 1032  kubectl get nodes
+
+Day 2:
+1060  kubectl run nginx --image=ngingx --dry-run=client
+ 1061  kubectl run nginx --image=ngingx --dry-run=client -o yaml
+ 1062  kubectl run nginx --image=ngingx --dry-run=client -o yaml > pod_new.yaml
+ 1063  ll
+ 1064  ls -lrt
+ 1065  cat pod_new.yaml
+ 1066  kubectl run nginx --image=ngingx --dry-run=client -o json > pod_new.json
+ 1067  ls -lrt
+ 1068  cat pod_new.json
+ 1069  kubectl get pods nginx-pod --show-labels
+ 1070  kubectl get pods nginx-pod -o wide
+ 1071  kubectl get pods  -o wide
+ 1072  kubectl get namespaces
+ 1073  kubectl get ns
+ 1074  kubectl get nodes
+ 1075  kubectl get nodes -o wide
+kubectl describe pod nginx-ppod
+kubectl delete pod nginx-ppod
+kubectl create -f pods.yaml
+kubectl exec -it nginx-pod -- /bin/sh
+
+
+Day 3: Replication controller (replica set is the newer version, use replicates instead of replication controller now)
+So,  with replicates you can manage the already running pods under the replicates using labels
+
+1030  kubectl get po
+ 1031  kubectl delete po nginx-4h5md nginx-dbkm8 nginx-rzrkw
+ 1032  kubectl get po
+ 1033  kubectl get rs
+ 1034  kubectl get rc
+ 1035  kubectl delete rc nginx
+ 1036  kubectl get po
+ 1037  kubectl apply -f rc.yaml
+ 1038  vi rc.yaml
+ 1039  kubectl apply -f rc.yaml
+ 1040  kubectl get rs
+ 1041  kubectl get po
+ 1042  kubectl edit rs nginx
+ 1043  kubectl get po
+ 1044  kubectl get rs
+ 1045  kubectl delete rs/nginx
+Kubectl delete rs nginx
+Kubectl explain rs
+
+Day 4: Deployment:
+Deployment manages replicates and replicates manages pods. Deployment provides extra functionality.
+e.g. if we want to upgrade image of nginx, if you do it using replicas set you will face downtime.
+So, deployment makes changes in rolling manner, so there is no downtime.
+Deployment creates  the replicaset and the replicaset creates the pods
+So, if you want to change the image, you can do from below ways
+Kubectl set image deploy/nginx-deploy nginx=nginx:1.9.1
+Or directly edit the yaml file and apply 
+Or directly update the deploy yaml manifest using command -> kubectl edit deployment/nginx-deploy
+
+ 1067  kubectl describe po nginx-deploy-7fff95c694-nvzng
+ 1068  kubectl describe deploy/nginx-deploy
+ 1069  kubectl describe deployment/nginx-deploy
+ 1070  kubectl describe deploy/nginx-deploy
+ 1073  kubectl rollout history deployment/nginx-deploy
+ 1074  kubectl rollout undo deployment/nginx-deploy
+ 1075  kubectl describe deploy/nginx-deploy
+ 1076  kubectl create deployment/nginx-deploy --dry-run=client
+ 1079  kubectl create deployment nginx-deploy --image=nginx --dry-run=client -o yaml
+ 1080  kubectl create deployment nginx-deploy --image=nginx --dry-run=client -o yaml > deployment.yaml
+Kubectl explain deployment
+Kubectl get all
+Kubectl get po -o wide
+kubectl delete deployment nginx-deploy
+
+
+Day 5: services
+We want to access this nginx frontend external, this can be done using services.
+So, to make the application accessible to users and also to make the sure that the frontend pods are able to communicate with backend pods and external data sources we use services.
+
+Users -> service -> frontend pods -> service -> backend pods -> service -> database
+
+Different types of services:
+1. Cluster ip
+2. 2. Nodeport
+3. External names
+4. Load balancer
+
+
+1049  kubect get svc
+ 1050  kubectl get svc
+ 1051  kubectl describe svc nodeport-svc
+ 1052  curl localhost:30001
+ 1053  curl localhost:3001
+

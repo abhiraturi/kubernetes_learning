@@ -1,0 +1,35 @@
+replication controller/replica set:
+Replication controller (replica set is the newer version, use replicates instead of replication controller now)
+So,  with replicates you can manage the already running pods under the replicates using labels
+
+
+deployment:
+Deployment manages replicates and replicates manages pods. Deployment provides extra functionality.
+e.g. if we want to upgrade image of nginx, if you do it using replicas set you will face downtime.
+So, deployment makes changes in rolling manner, so there is no downtime.
+Deployment creates  the replicaset and the replicaset creates the pods
+So, if you want to change the image, you can do from below ways
+Kubectl set image deploy/nginx-deploy nginx=nginx:1.9.1
+Or directly edit the yaml file and apply 
+Or directly update the deploy yaml manifest using command -> kubectl edit deployment/nginx-deploy
+
+
+
+services:
+We want to access this nginx frontend external, this can be done using services.
+So, to make the application accessible to users and also to make the sure that the frontend pods are able to communicate with backend pods and external data sources we use services.
+
+Users -> service -> frontend pods -> service -> backend pods -> service -> database
+
+There are 4 types of services:
+  - NodePort
+  - ClusterIP
+  - LoadBalancer
+  - ExternalName
+
+A NodePort service is a way to expose a service on a specific port on each node in the cluster. This port is called the NodePort. Traffic sent to the NodePort is forwarded to the service.
+A ClusterIP service is the default type of service. It gives a service an IP address that is only accessible from within the cluster. This is useful for services that only need to be accessed by other applications within the cluster.
+A LoadBalancer service is a way to expose a service externally. It creates a load balancer in the cloud provider and forwards traffic to the service.
+A ExternalName service is a way to map a service to a DNS name. This is useful for services that are not hosted in Kubernetes.
+
+
