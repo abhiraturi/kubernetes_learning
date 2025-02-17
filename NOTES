@@ -229,3 +229,65 @@ first check the labels , if matches schedule the pod otherwise just schedule the
  1364  k apply -f affinity2.yaml
  1365  k get po
 
+Day 12: Resources limits and requests
+CPU throttling: when pod go past the cpu limits, its cpu throttling. So, it can go beyond available CPU called cpu throttling.
+OOM: When pod go past the memory limits, its gives OOM errors.
+
+We specify requests and limits in container so that we can restrict the pod to get extra resources and the pod will crash when a limit is defined and it goes past that. In this way the pod will not occupy entire resources of the node which can hamper othe r pods scheduling on same node.
+Instead of failing the node, its better to fail the pod.
+
+Metric server:
+metric server that exposes the metrics of the nodes e.g. cpu, memory utilization to the processes for autosaling etc.
+It creates extra metrics pod under kube-system in control plane.
+1421  k delete po metrics-server-db4f45b97-vf7gg -n kube-system
+ 1422  k get po -n kube-system | grep metric
+ 1423  k get po -n kube-system | grep metric
+ 1424  k get po -n kube-system | grep metric
+ 1425  k top node
+ 1426  clear
+ 1427  k create ns mem-example
+ 1428  k get ns
+ 1429  k top pod
+ 1430  k top pod -n kube-system
+ 1433  k top pod -n kube-system | sort -n
+ 1434  k get events -n kube-system
+ 1435  clear
+ 1436  k get nodes
+
+
+Day 13:Autoscaling:
+Application with 1000 of pods, its not possible to scale manually.
+Based on resources utillization we can autoscale.
+
+HPA: horizontal pod Autoscaling. Also called scale out/sclae in
+This will add identical pods on deployment based on load in the server based on cpu, memory.
+There are more users, it will add more replicas. We are adding pods horizontally and automatically.
+This can be applied on two different aspects 1. infra i.e. nodes 2. worklloads i.e. pods
+
+VPA: vertical pod automatically
+Increase the pod size instead of adding. The pod will be replaced by bigger pod. stateless in nature, downtime will be there.
+This can be applied on two different aspects 1. infra i.e. nodes 2. worklloads i.e. pods
+
+Event based autoscaling (keda)
+
+Only hpa comes as default as part of kubernetes.
+
+ 1446  k get po
+ 1447  k get svc
+ 1449  k autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
+ 1450  k get po
+ 1451  k get po
+ 1452  k get hpa
+ 1458  k get hpa --watch
+
+Day 14: health probes
+Health checks using http/tcp in an interval of time.
+
+Three types:
+1. startup probes -> for slow legacy apps. first startup probe will be active and only then readiness and liveness probes gets active.
+for production, combination of probes are used.
+2. readiness probes -> ensure the application is ready before the application starts serving traffic to the user.
+3. liveness probes -> restart the application if it fails
+it actually monitors the application, if application fails or crash due to network etc, the liveness probes restarts the pod.
+
+So, when probe fails continuously for sometime, you will see crashloopbackoff for the pod.

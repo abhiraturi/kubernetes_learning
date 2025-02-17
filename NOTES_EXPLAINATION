@@ -105,3 +105,23 @@ If pur node is priority that a pod needs to be scheduled on a specific node then
 2. preferredDuringSchedulingIgnoredDuringExecution
 first check the labels , if matches schedule the pod otherwise just schedule the pod. If pod is out priority i.e. the pod must be scheduled irrespective of affinity matching or not, then use this.
 
+
+
+Autoscaling:
+Autoscaling:
+Application with 1000 of pods, its not possible to scale manually.
+Based on resources utillization we can autoscale.
+
+HPA: horizontal pod Autoscaling. Also called scale out/sclae in
+This will add identical pods on deployment based on load in the server based on cpu, memory.
+There are more users, it will add more replicas. We are adding pods horizontally and automatically.
+This can be applied on two different aspects 1. infra i.e. nodes 2. worklloads i.e. pods
+
+VPA: vertical pod automatically
+Increase the pod size instead of adding. The pod will be replaced by bigger pod. stateless in nature, downtime will be there.
+This can be applied on two different aspects 1. infra i.e. nodes 2. worklloads i.e. pods
+
+Event based autoscaling (keda)
+
+Only hpa comes as default as part of kubernetes.
+
