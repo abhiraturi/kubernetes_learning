@@ -104,3 +104,66 @@ Different types of services:
  1052  curl localhost:30001
  1053  curl localhost:3001
 
+
+Day 6:  namespaces:
+1115  k get deployment -n demo
+ 1116  k get po -n demo
+ 1117  k exec -it nginx-demo-87cd4cbb7-v7w8d -n demo /bin/bash
+ 1118  k get po -n demo -o wide
+ 1119  clear
+ 1120  k get deployment -n demo
+ 1121  k scale --replicas=3 deployment nginx-demo -n demo
+ 1122  k get deployment -n demo
+ 1123  k expose svc-demo deployment nginx-demo --port 80 -n demo
+ 1124  k expose deployment nginx-demo --name=svc-demo --port 80 -n demo
+ 1125  k get svc -n demo
+ 1126  k get po -n demo
+ 1127  k exec -it nginx-demo-87cd4cbb7-2bb6d /bin/sh
+ 1128  k exec -it nginx-demo-87cd4cbb7-2bb6d /bin/bash
+ 1129  k exec -it nginx-demo-87cd4cbb7-2bb6d -- /bin/bash
+ 1130  k exec -it nginx-demo-87cd4cbb7-2bb6d -n demo  /bin/bash
+
+
+Day 7 : Multi container pod kubernetes
+Pod will show up and running if all the init containers in that pod is running.
+
+ 1193  k get svc
+ 1194  k delete svc mydb
+ 1195  k get po
+ 1196  k delete po my-app
+ 1197  k get po
+ 1198  k delete po my-db-65776cb9c7-kh4m2 
+ 1199  k get po
+ 1200  k create -f multicontainerpod.yaml
+ 1201  k get po
+ 1202  k get svc
+ 1203  k get deployment
+ 1204  k get po
+ 1205  k get deployment
+ 1206  k expose deployment my-db  --name mydb --port 80
+ 1207  k get svc
+ 1208  k get po
+
+Day 8 : Daemonset/cron job
+Daemonset e.g. monitoring, logs, etc, only one runs per node.
+
+1221  k apply -f daemonset.yaml
+ 1222  k get daemonset
+ 1223  k get nodes
+ 1224  k get po
+ 1225  k get daemonset -n kube-system
+
+
+Day 9 : Manual scheduloing/ selectors/ labels
+scheduler does not manage static pod but kubelet manages the static pods.
+Pods can be scheduled manually by mentioning the node in the pods yaml file. So, even if the scheduler is down, the pods will still be scheduled in the node mentioned in the yaml file.
+generally, the scheduler, api server, controller manager, etc yamls are under /etc/kubernetes/manifest directory in control plane node, these are called static pods.
+This video is about scheduling and selecting pods in Kubernetes. The video starts with an introduction of the Kubernetes architecture and the role of the scheduler in assigning pods to nodes. The video then introduces the concept of static pods, which are control plane components that are not managed by the scheduler. The video also covers manual scheduling, which allows users to specify the node on which a pod should be scheduled. Finally, the video discusses labels and selectors, which are used to filter and group resources in Kubernetes.
+
+ 1257  k get ns
+ 1258  k get po --selector tier=backend -n demo
+ 1259  k get po
+ 1260  k describe po redis 
+ 1261  k get po --selector type=backend -n demo
+
+ 

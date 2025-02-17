@@ -1,4 +1,4 @@
-replication controller/replica set:
+Replication controller/replica set:
 Replication controller (replica set is the newer version, use replicates instead of replication controller now)
 So,  with replicates you can manage the already running pods under the replicates using labels
 
@@ -32,4 +32,50 @@ A ClusterIP service is the default type of service. It gives a service an IP add
 A LoadBalancer service is a way to expose a service externally. It creates a load balancer in the cloud provider and forwards traffic to the service.
 A ExternalName service is a way to map a service to a DNS name. This is useful for services that are not hosted in Kubernetes.
 
+
+Namespce:
+Here are some notes about the video, Day 10/40 - Kubernetes Namespace Explained - CKA Full Course 2025:
+ * Namespaces:  Provide a way to isolate resources within a Kubernetes cluster.
+ * Default Namespace: When you create a resource without specifying a namespace, it goes into the "default" namespace.
+ * Other Namespaces: Kubernetes creates namespaces like "kube-system" for its own components.
+ * Resource Management: Namespaces make it easier to manage resources by grouping them logically.
+ * Security: You can assign different permissions (RBAC) to different namespaces.
+ * Communication: Resources within the same namespace can communicate with each other using their hostnames.
+ * Cross-Namespace Communication:  Pods in different namespaces need to use fully qualified domain names (FQDNs) to communicate.
+ * Creating Namespaces: You can create namespaces using kubectl create ns <namespace-name>.
+ * Deleting Namespaces: You can delete namespaces using kubectl delete ns <namespace-name>.
+ * Working with Namespaces: When working with resources in a specific namespace, you need to specify the namespace using the -n flag with kubectl commands.
+ * Services: Services can be used to expose deployments to other namespaces.
+ * Accessing Services: To access a service in another namespace, you need to use its FQDN.
+ * FQDN Format: The FQDN for a service is typically <service-name>.<namespace-name>.svc.cluster.local.
+ * ETC resolve conf: This file on the pod is responsible for IP to DNS resolution and shows how to construct the FQDN.
+Additional Notes:
+ * The video includes a demo showing how to create namespaces, deploy pods, expose services, and test communication between pods in different namespaces.
+ * The instructor emphasizes the importance of practice for the CKA exam.
+ * The video is part of a larger CKA course.
+I hope these notes are helpful!
+
+
+
+
+Multi containers:
+This video is about multi-container pods in Kubernetes.
+The speaker first introduces the concept of multi-container pods, which allow you to have multiple containers running in a single pod. This can be useful for a variety of reasons, such as separating application code from helper processes or running multiple processes that need to communicate with each other. The speaker then explains the two types of multi-container pods: init containers and sidecar containers. Init containers are containers that run before the main application container and are used to perform initialization tasks, such as setting up environment variables or creating configuration files. Sidecar containers are containers that run alongside the main application container and provide additional services, such as logging or monitoring.
+The speaker then gives a demo of how to create a multi-container pod using an init container. The init container in the demo is used to wait for a service to be available before starting the main application container. The speaker also shows how to use environment variables in a multi-container pod.
+Finally, the speaker gives a brief overview of the next video in the series, which will cover demon sets and cron jobs.
+
+
+
+Daemonset:
+This video is about Kubernetes Daemonset, Jobs, and Cronjobs.
+Kubernetes Daemonset ensures that all nodes run a copy of a pod. It is often used for monitoring, logging, and networking. Some control plane components and networking components are deployed as Daemonsets. The video shows how to create a Daemonset.
+Jobs are used for tasks that run one time and then complete. Cronjobs are used for tasks that need to be run on a schedule. The video shows how to create a Cronjob.
+The video also includes a small assignment task in the GitHub repository.
+
+
+Static pods/manual scheduling:
+scheduler does not manage static pod but kubelet manages the static pods.
+Pods can be scheduled manually by mentioning the node in the pods yaml file. So, even if the scheduler is down, the pods will still be scheduled in the node mentioned in the yaml file.
+generally, the scheduler, api server, controller manager, etc yamls are under /etc/kubernetes/manifest directory in control plane node, these are called static pods.
+This video is about scheduling and selecting pods in Kubernetes. The video starts with an introduction of the Kubernetes architecture and the role of the scheduler in assigning pods to nodes. The video then introduces the concept of static pods, which are control plane components that are not managed by the scheduler. The video also covers manual scheduling, which allows users to specify the node on which a pod should be scheduled. Finally, the video discusses labels and selectors, which are used to filter and group resources in Kubernetes.
 
