@@ -291,3 +291,23 @@ for production, combination of probes are used.
 it actually monitors the application, if application fails or crash due to network etc, the liveness probes restarts the pod.
 
 So, when probe fails continuously for sometime, you will see crashloopbackoff for the pod.
+
+
+Day 15: Configmap and secrets
+When env variable grows, not a good practise to keep in different yaml.
+We create configmap and key value inside configmap and inject those inside pods.
+best practise is to use volume mount inconfig map.
+1561  k get cm
+ 1562  k describe cm/app-cm
+ 1563  clear
+ 1564  k get po
+ 1565  k apply -f pod.yaml
+ 1566  k get po
+ 1567  k describe po myapp-pod
+ 1568  k exed -it  myapp-pod -- /bin/bash
+ 1569  k exec -it  myapp-pod -- /bin/bash
+ 1570  k exec -it  myapp-pod -- /bin/sh
+ 1571  k create cm app-cm --from-file=app.config
+ 1572  k create cm app-cm --from-literal=firstname=abhishek \\n--from-literal=lastname=raturi -o yaml
+ 1573  k create cm app-cm --from-literal=firstname=abhishek \\n--from-literal=lastname=raturi --dry-run=client -o yaml
+ 1574  k create cm app-cm --from-literal=firstname=abhishek \\n--from-literal=lastname=raturi --dry-run=client -o yaml > cm.yaml

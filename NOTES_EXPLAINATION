@@ -125,3 +125,24 @@ Event based autoscaling (keda)
 
 Only hpa comes as default as part of kubernetes.
 
+Health probes:
+Health checks using http/tcp in an interval of time.
+
+Three types:
+1. startup probes -> for slow legacy apps. first startup probe will be active and only then readiness and liveness probes gets active.
+for production, combination of probes are used.
+2. readiness probes -> ensure the application is ready before the application starts serving traffic to the user.
+3. liveness probes -> restart the application if it fails
+it actually monitors the application, if application fails or crash due to network etc, the liveness probes restarts the pod.
+
+So, when probe fails continuously for sometime, you will see crashloopbackoff for the pod.
+
+Configmap and secrets
+When env variable grows, not a good practise to keep in different yaml.
+We create configmap and key value inside configmap and inject those inside pods.
+best practise is to use volume mount inconfig map.
+ConfigMaps and Secrets allow you to store and manage configuration data and sensitive information, such as passwords and API keys, separately from your application code. This makes it easier to update and manage your application's configuration, and it also helps to improve security by keeping sensitive information out of your code.
+The video then provides a demo of how to create and use ConfigMaps and Secrets in a Kubernetes cluster. The demo shows how to create a ConfigMap, how to mount a ConfigMap into a Pod, and how to access the data in a ConfigMap from your application. The demo also shows how to create a Secret, how to mount a Secret into a Pod, and how to access the data in a Secret from your application.
+The video ends with a discussion of some of the best practices for using ConfigMaps and Secrets in Kubernetes. The discussion covers topics such as how to choose the right type of ConfigMap or Secret for your needs, how to secure your ConfigMaps and Secrets, and how to manage your ConfigMaps and Secrets across different environments.
+Overall, this video provides a good overview of Kubernetes ConfigMaps and Secrets. The video is clear and concise, and the demo is well-done. If you are interested in learning more about Kubernetes ConfigMaps and Secrets, this video is a good place to start.
+
