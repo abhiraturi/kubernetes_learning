@@ -1,0 +1,155 @@
+Here is a list of Kubernetes commands extracted from your notes:
+
+Day 1: Cluster Setup & Context Management
+kubectl get nodes
+kind create cluster --name cka-cluster2 --config config.yaml
+kubectl config get-contexts
+kubectl config set-context kind-cka-cluster1
+kubectl config use-context kind-cka-cluster1
+kubectl config use-context kind-cka-cluster2
+
+
+Day 2: Pods & Labels
+kubectl run nginx --image=nginx --dry-run=client
+kubectl run nginx --image=nginx --dry-run=client -o yaml
+kubectl run nginx --image=nginx --dry-run=client -o yaml > pod_new.yaml
+kubectl run nginx --image=nginx --dry-run=client -o json > pod_new.json
+kubectl get pods nginx-pod --show-labels
+kubectl get pods nginx-pod -o wide
+kubectl get pods -o wide
+kubectl get namespaces
+kubectl get ns
+kubectl get nodes
+kubectl get nodes -o wide
+kubectl describe pod nginx-pod
+kubectl delete pod nginx-pod
+kubectl create -f pods.yaml
+kubectl exec -it nginx-pod -- /bin/sh
+
+
+Day 3: ReplicaSets & ReplicationControllers
+kubectl get po
+kubectl delete po nginx-4h5md nginx-dbkm8 nginx-rzrkw
+kubectl get rs
+kubectl get rc
+kubectl delete rc nginx
+kubectl apply -f rc.yaml
+kubectl edit rs nginx
+kubectl delete rs nginx
+kubectl explain rs
+
+
+Day 4: Deployments & Rollouts
+kubectl describe po nginx-deploy-7fff95c694-nvzng
+kubectl describe deploy/nginx-deploy
+kubectl describe deployment/nginx-deploy
+kubectl rollout history deployment/nginx-deploy
+kubectl rollout undo deployment/nginx-deploy
+kubectl create deployment nginx-deploy --dry-run=client
+kubectl create deployment nginx-deploy --image=nginx --dry-run=client -o yaml
+kubectl create deployment nginx-deploy --image=nginx --dry-run=client -o yaml > deployment.yaml
+kubectl explain deployment
+kubectl get all
+kubectl get po -o wide
+kubectl delete deployment nginx-deploy
+
+
+Day 5: Services
+kubectl get svc
+kubectl describe svc nodeport-svc
+curl localhost:30001
+curl localhost:3001
+
+
+Day 6: Namespaces
+k get deployment -n demo
+k get po -n demo
+k exec -it nginx-demo-87cd4cbb7-v7w8d -n demo /bin/bash
+k get po -n demo -o wide
+k scale --replicas=3 deployment nginx-demo -n demo
+k expose svc-demo deployment nginx-demo --port 80 -n demo
+k expose deployment nginx-demo --name=svc-demo --port 80 -n demo
+k get svc -n demo
+k exec -it nginx-demo-87cd4cbb7-2bb6d /bin/sh
+k exec -it nginx-demo-87cd4cbb7-2bb6d /bin/bash
+k exec -it nginx-demo-87cd4cbb7-2bb6d -- /bin/bash
+
+Day 7: Multi-container Pods
+k get svc
+k delete svc mydb
+k get po
+k delete po my-app
+k delete po my-db-65776cb9c7-kh4m2
+k create -f multicontainerpod.yaml
+k expose deployment my-db --name mydb --port 80
+
+Day 8: DaemonSets & CronJobs
+k apply -f daemonset.yaml
+k get daemonset
+k get daemonset -n kube-system
+
+Day 9: Scheduling, Selectors & Labels
+k get ns
+k get po --selector tier=backend -n demo
+k get po
+k describe po redis
+k get po --selector type=backend -n demo
+
+Day 10: Taints & Tolerations
+k taint node cka-cluster3-worker gpu=true:NoSchedule
+k delete po nginx redis
+k run nginx-new --image=nginx --dry-run=client -o yaml
+k run nginx-new --image=nginx --dry-run=client -o yaml > newnginx.yaml
+k apply -f newnginx.yaml
+k get nodes --show-labels
+k label node cka-cluster3-worker2 gpu=false
+
+
+Day 11: Node Affinity
+k apply -f affinity.yaml
+k apply -f affinity.yaml
+k get po
+k get node --show-labels
+k get node
+k get po
+k label node cka-cluster3-worker2 diskType=ssd
+k apply -f affinity2.yaml
+
+
+
+Day 12: Resource Limits and Requests
+k delete po metrics-server-db4f45b97-vf7gg -n kube-system
+k get po -n kube-system | grep metric
+k top node
+k create ns mem-example
+k get ns
+k top pod -n kube-system
+k top pod -n kube-system | sort -n
+k get events -n kube-system
+clear
+k get nodes
+
+
+Day 13: Autoscaling
+k get po
+k get svc
+k autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
+k get po
+k get hpa
+k get hpa --watch
+
+
+Day 15: ConfigMaps and Secrets
+k get cm
+k describe cm/app-cm
+clear
+k get po
+k apply -f pod.yaml
+k get po
+k describe po myapp-pod
+k exec -it myapp-pod -- /bin/sh
+k create cm app-cm --from-file=app.config
+k create cm app-cm --from-literal=firstname=abhishek --from-literal=lastname=raturi -o yaml
+k create cm app-cm --from-literal=firstname=abhishek --from-literal=lastname=raturi --dry-run=client -o yaml
+k create cm app-cm --from-literal=firstname=abhishek --from-literal=lastname=raturi --dry-run=client -o yaml > cm.yaml
+
