@@ -166,4 +166,66 @@ This video is about scheduling and selecting pods in Kubernetes. The video start
  1260  k describe po redis 
  1261  k get po --selector type=backend -n demo
 
- 
+
+Day 10: taints and tolerations
+We are instructing node to only accept specific pod that has the tolerations.
+e.g. we want to run AI pod on a specific node because that node has specifications to run the AI workload. SO based on tolerations matching the AI pods will be acepted by node and rest of the other pods will be rejected and scheduled on dfifferent node.
+Taint is done on node and toleration is done on pods.
+
+types:
+noschedule : works only for newer pods
+noexecute: works for all existing and newer pods
+prefernoschedule: no guarantee of pods scheduling for the taint and tolerations.
+
+selector:
+We add the label on node and pod, so it will schedule the pod to those nodes that has same labels. So, it will not go to the node that does not have matching labels as that of the pod.
+
+So, taints and tolerations is to avoid the nodes but labels and selector tells which pod will be scheduled on what node.
+
+k taint node cka-cluster3-worker gpu=true:NoSchedule
+node/cka-cluster3-worker tainted
+1322  k delete po nginx redis
+ 1323  k get po
+ 1324  k run nginx-new --image=nginx --dry-run=client -o yaml
+ 1325  k run nginx-new --image=nginx --dry-run=client -o yaml > newnginx.yaml
+ 1326  k apply -f newnginx.yaml
+ 1327  k get po
+ 1328  k get po
+ 1329  k get nodes --show-labels
+ 1330  k get nodes --show-labels
+ 1331  k get po
+ 1332  k get nodes 
+ 1333  k label node cka-cluster3-worker2  gpu=false
+ 1334  k get nodes --show-labels
+ 1335  k get po
+
+
+
+
+ Day 11: Node Affinity:
+It can have multiple labels attached to nodes e.g. disk in (ssd,hdd) which is not possible in taints and tolerations.
+
+types:
+1. requiredDuringSchedulingIgnoredDuringExecution
+the labels must match otherwise pods will not be schduled, pods will get stuck in pending state if affinity does not match.
+If pur node is priority that a pod needs to be scheduled on a specific node then go with this.
+
+2. preferredDuringSchedulingIgnoredDuringExecution
+first check the labels , if matches schedule the pod otherwise just schedule the pod. If pod is out priority i.e. the pod must be scheduled irrespective of affinity matching or not, then use this.
+
+ 1351  k apply -f affinity.yaml
+ 1352  k apply -f affinity.yaml
+ 1353  k get po
+ 1354  k get node --show-labels
+ 1355  k get node
+ 1356  k label node cka-cluster3-worker2 disktype=ssd
+ 1357  k get po
+ 1358  k get po
+ 1359  k label node cka-cluster3-worker2 diskType=ssd
+ 1360  k get po
+ 1361  k apply -f affinity2.yaml
+ 1362  k apply -f affinity2.yaml
+ 1363  k apply -f affinity2.yaml
+ 1364  k apply -f affinity2.yaml
+ 1365  k get po
+

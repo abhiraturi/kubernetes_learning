@@ -79,3 +79,28 @@ Pods can be scheduled manually by mentioning the node in the pods yaml file. So,
 generally, the scheduler, api server, controller manager, etc yamls are under /etc/kubernetes/manifest directory in control plane node, these are called static pods.
 This video is about scheduling and selecting pods in Kubernetes. The video starts with an introduction of the Kubernetes architecture and the role of the scheduler in assigning pods to nodes. The video then introduces the concept of static pods, which are control plane components that are not managed by the scheduler. The video also covers manual scheduling, which allows users to specify the node on which a pod should be scheduled. Finally, the video discusses labels and selectors, which are used to filter and group resources in Kubernetes.
 
+
+taints and tolerations, labels, selectors:
+We are instructing node to only accept specific pod that has the tolerations.
+e.g. we want to run AI pod on a specific node because that node has specifications to run the AI workload. SO based on tolerations matching the AI pods will be acepted by node and rest of the other pods will be rejected and scheduled on dfifferent node.
+Taint is done on node and toleration is done on pods.
+
+types:
+noschedule : works only for newer pods
+noexecute: works for all existing and newer pods
+prefernoschedule: no guarantee of pods scheduling for the taint and tolerations.
+
+selector:
+We add the label on node and pod, so it will schedule the pod to those nodes that has same labels. So, it will not go to the node that does not have matching labels as that of the pod.
+So, taints and tolerations is to avoid the nodes but labels and selector tells which pod will be scheduled on what node.
+
+Node Affinity:
+It can have multiple labels attached to nodes e.g. disk in (ssd,hdd) which is not possible in taints and tolerations.
+
+types:
+1. requiredDuringSchedulingIgnoredDuringExecution
+the labels must match otherwise pods will not be schduled, pods will get stuck in pending state if affinity does not match.
+If pur node is priority that a pod needs to be scheduled on a specific node then go with this.
+
+2. preferredDuringSchedulingIgnoredDuringExecution
+first check the labels , if matches schedule the pod otherwise just schedule the pod. If pod is out priority i.e. the pod must be scheduled irrespective of affinity matching or not, then use this.
