@@ -104,3 +104,4 @@ If pur node is priority that a pod needs to be scheduled on a specific node then
 
 2. preferredDuringSchedulingIgnoredDuringExecution
 first check the labels , if matches schedule the pod otherwise just schedule the pod. If pod is out priority i.e. the pod must be scheduled irrespective of affinity matching or not, then use this.
+
