@@ -311,3 +311,14 @@ best practise is to use volume mount inconfig map.
  1572  k create cm app-cm --from-literal=firstname=abhishek \\n--from-literal=lastname=raturi -o yaml
  1573  k create cm app-cm --from-literal=firstname=abhishek \\n--from-literal=lastname=raturi --dry-run=client -o yaml
  1574  k create cm app-cm --from-literal=firstname=abhishek \\n--from-literal=lastname=raturi --dry-run=client -o yaml > cm.yaml
+
+
+ Day 16: tls/ssl 
+The speaker starts with a simple example of a user sending a request to a server. The server asks for authentication details, and the user sends their credentials. However, this communication is not secure and can be intercepted by a hacker.
+To secure the communication, the user and server can use encryption. There are two types of encryption: symmetric and asymmetric. In symmetric encryption, the same key is used to encrypt and decrypt the data. In asymmetric encryption, different keys are used for encryption and decryption.
+SSL/TLS uses asymmetric encryption to secure the communication between a user and a server. The server generates a public key and a private key. The public key is sent to the user, and the user uses it to encrypt their data. The server then uses the private key to decrypt the data.
+To ensure that the user is communicating with the correct server, SSL/TLS uses certificates. A certificate is a digital document that verifies the identity of a server. When a user connects to a server, the server sends its certificate to the user. The user's browser then checks the certificate to make sure that it is valid.
+
+If the certificate is valid, the user's browser will establish a secure connection with the server. This connection is called an HTTPS connection.
+The speaker then explains how certificates are issued and signed by certificate authorities (CAs). CAs are trusted organizations that verify the identity of servers.
+Finally, the speaker discusses how SSL/TLS works in Kubernetes. Kubernetes is a container orchestration platform. The speaker explains how to create a certificate signing request (CSR) in Kubernetes and how to have it signed by a CA.
