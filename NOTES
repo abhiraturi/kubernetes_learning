@@ -322,3 +322,19 @@ To ensure that the user is communicating with the correct server, SSL/TLS uses c
 If the certificate is valid, the user's browser will establish a secure connection with the server. This connection is called an HTTPS connection.
 The speaker then explains how certificates are issued and signed by certificate authorities (CAs). CAs are trusted organizations that verify the identity of servers.
 Finally, the speaker discusses how SSL/TLS works in Kubernetes. Kubernetes is a container orchestration platform. The speaker explains how to create a certificate signing request (CSR) in Kubernetes and how to have it signed by a CA.
+
+
+
+This video is about securing communication in Kubernetes clusters using TLS. 
+It explains the basics of TLS and how it works in Kubernetes, including the different types of certificates involved 
+(client, server, and root certificates). The video also covers how to create and approve certificate signing requests (CSRs) 
+and how to share the issued certificates with users. The video provides a detailed walkthrough of the process, with commands 
+and examples. It also emphasizes the importance of practicing these steps for the CKAD exam.
+
+
+
+authentication/ authorization/ kubeconfig:
+kubeconfig reside in home directory, here: cat ~/.kube/config
+
+RBAC:
+

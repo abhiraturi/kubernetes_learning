@@ -153,3 +153,8 @@ k create cm app-cm --from-literal=firstname=abhishek --from-literal=lastname=rat
 k create cm app-cm --from-literal=firstname=abhishek --from-literal=lastname=raturi --dry-run=client -o yaml
 k create cm app-cm --from-literal=firstname=abhishek --from-literal=lastname=raturi --dry-run=client -o yaml > cm.yaml
 
+
+dry run commands to quickly create u=yaml files:
+kubectl create deployment my-deployment --image=nginx --replicas=3 --dry-run=client -o yaml
+kubectl create service clusterip my-service --tcp=80:80 --dry-run=client -o yaml
+kubectl create pod my-pod --image=nginx --dry-run=client -o yaml
